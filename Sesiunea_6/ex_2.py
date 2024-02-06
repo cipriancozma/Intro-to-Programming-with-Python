@@ -94,5 +94,37 @@ def cifru_cezar(text, deplasament, cifrare=True):
       text_nou += litera
   return text_nou
 
-print(cifru_cezar('zab', 2, False))
-print(cifru_cezar('xyz', 2))
+# print(cifru_cezar('zab', 2, False))
+# print(cifru_cezar('xyz', 2))
+
+
+def cifrare_fisier(fisier, deplasament):
+  if "." in fisier:
+    nume_fisier, extensie = fisier.rsplit(".", 1)
+    fisier_cifrat = f"{nume_fisier}_cifrat.{extensie}"
+  else:
+    fisier_cifrat = f"{fisier}_cifrat"
+    
+  with open(fisier, 'r') as fisier_orig, open(fisier_cifrat, 'w') as fisier_nou:
+    for linie in fisier_orig:
+      linie_striped = linie.strip()
+      linie_cifrata = cifru_cezar(linie_striped, deplasament)
+      fisier_nou.write(linie_cifrata + "\n")
+
+
+# print(cifrare_fisier("./words.txt", 3))
+
+def decifrare_fisier(fisier, deplasament):
+  if "." in fisier:
+    nume_fisier, extensie = fisier.rsplit(".", 1)
+    fisier_decifrat = f"{nume_fisier}_decifrat.{extensie}"
+  else:
+    fisier_decifrat = f"{fisier}_decifrat"
+
+  with open(fisier, 'r') as fisier_orig, open(fisier_decifrat, 'w') as fisier_nou:
+    for linie in fisier_orig:
+      linie_striped = linie.strip()
+      linie_decifrata = cifru_cezar(linie_striped, deplasament, False)
+      fisier_nou.write(linie_decifrata + "\n")
+
+decifrare_fisier('./words_cifrat.txt', 3)
